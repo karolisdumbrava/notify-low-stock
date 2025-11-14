@@ -1,5 +1,5 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "react-router";
-import { useLoaderData, useNavigate } from "react-router";
+import { useLoaderData, useNavigate, useNavigation } from "react-router";
 import { authenticate } from "../shopify.server";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { GET_PRODUCTS_QUERY } from "../graphql/products.queries";
@@ -71,23 +71,38 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const data = useLoaderData() as ProductsApiResponse;
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const handleFilterChange = (newStatus: ProductFilter) => {
     navigate(`?status=${newStatus}`);
   };
 
+  const isLoading = navigation.state === "loading";
+
   return (
     <s-page>
       <div style={{ padding: "20px" }}>
         <PageHeader title="Product Inventory" />
-
         <FilterButtons
           currentFilter={data.currentFilter}
           counts={data.counts}
           onFilterChange={handleFilterChange}
         />
-
-        <ProductInventoryTable rows={data.rows} />
+        {/* Loading State */}
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "200px",
+            }}
+          >
+            <s-spinner size="large" />
+          </div>
+        ) : (
+          <ProductInventoryTable rows={data.rows} />
+        )}{" "}
       </div>
     </s-page>
   );
