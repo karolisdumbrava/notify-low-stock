@@ -1,3 +1,4 @@
+import { INVENTORY_CONFIG } from "app/config/inventory.config";
 import {
   FormattedProduct,
   FormattedVariant,
@@ -12,8 +13,8 @@ import {
 export function getVariantStatus(
   inventoryQuantity: number,
 ): "In Stock" | "Low Stock" | "Out of Stock" {
-  if (inventoryQuantity === 0) return "Out of Stock";
-  if (inventoryQuantity < 5) return "Low Stock";
+  if (inventoryQuantity === INVENTORY_CONFIG.OUT_OF_STOCK_THRESHOLD) return "Out of Stock";
+  if (inventoryQuantity < INVENTORY_CONFIG.LOW_STOCK_THRESHOLD) return "Low Stock";
   return "In Stock";
 }
 
@@ -32,13 +33,13 @@ export function filterProducts(
       return products.filter((product) =>
         product.variants.nodes.some(
           (variant) =>
-            variant.inventoryQuantity > 0 && variant.inventoryQuantity < 5,
+            variant.inventoryQuantity > INVENTORY_CONFIG.OUT_OF_STOCK_THRESHOLD && variant.inventoryQuantity < INVENTORY_CONFIG.LOW_STOCK_THRESHOLD,
         ),
       );
     case "out":
       return products.filter((product) =>
         product.variants.nodes.every(
-          (variant) => variant.inventoryQuantity === 0,
+          (variant) => variant.inventoryQuantity === INVENTORY_CONFIG.OUT_OF_STOCK_THRESHOLD,
         ),
       );
     case "all":
