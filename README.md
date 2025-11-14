@@ -2,6 +2,12 @@
 
 A Shopify app that helps merchants manage their inventory by displaying product stock levels with filtering capabilities for all, low stock and out-of-stock items.
 
+## Demo
+
+![App Demo](.github/assets/demo.gif)
+
+*Filter products by stock status and view inventory levels in real-time*
+
 ## Quick Start
 
 ### Prerequisites
