@@ -1,16 +1,19 @@
 import type { ProductVariantRow } from "../types/product.types";
+import { EmptyState } from "./EmptyState";
 
 type ProductInventoryTableProps = {
   rows: ProductVariantRow[];
+  currentFilter: string;
+  onResetFilter: () => void;
 };
 
-export function ProductInventoryTable({ rows }: ProductInventoryTableProps) {
+export function ProductInventoryTable({
+  rows,
+  currentFilter,
+  onResetFilter,
+}: ProductInventoryTableProps) {
   if (rows.length === 0) {
-    return (
-      <p role="status" aria-live="polite">
-        No products found for this filter.
-      </p>
-    );
+    return <EmptyState filter={currentFilter} onReset={onResetFilter} />;
   }
 
   return (

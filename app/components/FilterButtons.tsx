@@ -30,18 +30,24 @@ export function FilterButtons({
         <s-button
           variant={currentFilter === "all" ? "primary" : "secondary"}
           onClick={() => onFilterChange("all")}
+          aria-pressed={currentFilter === "all"}
+          aria-label="Show all products"
         >
           All Products ({counts.all})
         </s-button>
         <s-button
           variant={currentFilter === "low" ? "primary" : "secondary"}
           onClick={() => onFilterChange("low")}
+          aria-pressed={currentFilter === "low"}
+          aria-label="Filter by low stock products"
         >
           Low Stock ({counts.low})
         </s-button>
         <s-button
           variant={currentFilter === "out" ? "primary" : "secondary"}
           onClick={() => onFilterChange("out")}
+          aria-pressed={currentFilter === "out"}
+          aria-label="Filter by out of stock products"
         >
           Out of Stock ({counts.out})
         </s-button>

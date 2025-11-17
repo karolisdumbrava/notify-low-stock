@@ -79,6 +79,9 @@ export default function Index() {
 
   const isLoading = navigation.state === "loading";
 
+  const handleResetFilter = () => {
+    navigate("?status=all");
+  };
   return (
     <s-page>
       <div style={{ padding: "20px" }}>
@@ -101,7 +104,11 @@ export default function Index() {
             <s-spinner size="large" />
           </div>
         ) : (
-          <ProductInventoryTable rows={data.rows} />
+          <ProductInventoryTable
+            rows={data.rows}
+            currentFilter={data.currentFilter}
+            onResetFilter={handleResetFilter}
+          />
         )}{" "}
       </div>
     </s-page>
@@ -111,3 +118,5 @@ export default function Index() {
 export const headers: HeadersFunction = (headersArgs) => {
   return boundary.headers(headersArgs);
 };
+
+export { ErrorBoundary } from "../components/ErrorBoundary";
